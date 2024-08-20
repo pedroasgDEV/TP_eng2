@@ -2,12 +2,12 @@ from app.models.usr import Usr
 
 class User(Usr):
     def __init__(self, name = "NONAME", email = "NOEMAIL", passwrd = "NOPASSWRD",
-                 inst = "NOINST", course = "NOCOURSE", num = "NO_NUM"):
+                 inst = "NOINST", course = "NOCOURSE", regis_id = "NO_regis_id"):
         try:
             super().__init__(name, email, passwrd)
             self.__inst = inst
             self.__course = course
-            self.__num = num 
+            self.__regis_id = regis_id 
         except Exception as e:
             raise Exception(f"ERRO: object cannot be created\n{e}")
         self._description = self.__str__()
@@ -33,11 +33,5 @@ class User(Usr):
         self.__course = course
 
     @property
-    def num(self):
-        return self.__num
-
-    @num.setter
-    def num(self, num):
-        if not isinstance(num, str):
-            raise TypeError("TYPE_ERRO: num is a string")
-        self.__num = num
+    def regis_id(self):
+        return self.__regis_id
