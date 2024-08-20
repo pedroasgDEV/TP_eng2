@@ -1,24 +1,44 @@
-from pymongo import MongoClient
-from app.config import mongodb_config
+import psycopg2
+from app.config import postgresql_config
 
-class MongoDB:
+class PostgreSQL:
     def __init__(self):
-        self.__link = "mongodb+srv://{}:{}@{}.ckosrqe.mongodb.net/?retryWrites=true&w=majority&appName={}".format(
-            mongodb_config["USERNAME"],
-            mongodb_config["PASSWORD"],
-            mongodb_config["PROJECT"],
-            mongodb_config["APP"]
+        self.__conn = psycopg2.connect(
+            host = postgresql_config["HOST"],
+            database = postgresql_config["DATABASE"],
+            user = postgresql_config["USERNAME"],
+            password = postgresql_config["PASSWORD"],
+            port = postgresql_config["PORT"] 
         )
-        self.__client = None
-        self.__database = None
         
-    def connectDB(self):
-        self.__client = MongoClient(self.__link)
-        self.__database = self.__client[mongodb_config["DATABASE"]]
-        
-    def get_client(self):
-        return self.__client
+    @property
+    def database(self):
+        return self.__conn
     
-    def get_database(self):
-        return self.__database
+    def execute(self, sql):
+        try:
+            cursor = self.__conn.cursor()
+            cursor.execute(sql)
+            cursor.close()
+            self.__conn.commit()
+            
+        except:
+            return False
+        
+        return True
 
+    def consult(self, sql):
+        resp = None
+        
+        try:
+            cursor = self.__conn.cursor()
+            cursor.execute(sql)
+            resp = cursor.fetchall()
+            
+        except:           
+            return None
+        
+        return rs
+    
+    def close(self):
+        self.__conn.close()
