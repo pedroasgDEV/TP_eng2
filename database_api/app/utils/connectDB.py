@@ -15,7 +15,7 @@ class PostgreSQL:
             )
         
         except:
-            print.Error("\nERRO: can't connect database\n\n")
+            print("\nERRO: can't connect database\n\n")
             exit(1)
             
     @property

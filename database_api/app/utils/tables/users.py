@@ -1,5 +1,4 @@
 from app.utils.connectDB import PostgreSQL
-from app.models.user import User
 
 class Users:
     def __init__(self):
@@ -34,7 +33,7 @@ class Users:
         '''
         
         return self.__postgre.execute(sql)
-    
+        
     #select by regis_id
     def select(self, regis_id):
         sql = f'''
@@ -43,12 +42,18 @@ class Users:
         '''
         
         result = self.__postgre.consult(sql)
-        if result is not None:
-            usr = User(result[0][0], result[0][1], result[0][2],
-                       result[0][3], result[0][4])
+        
+        if result is None or len(result) < 1: return False
+        else: 
+            usr = {
+                "regis_id": result[0][0],
+                "name": result[0][1],
+                "email": result[0][2],
+                "passwrd": result[0][3],
+                "course": result[0][4]
+            }
+            
             return usr
-
-        else: return result
     
     #update data
     def update(self, regis_id, doc):
@@ -86,8 +91,14 @@ class Users:
             
         if result is None or len(result) < 1: return False
         else: 
-            usr = User(result[0][0], result[0][1], result[0][2],
-                       result[0][3], result[0][4])
+            usr = {
+                "regis_id": result[0][0],
+                "name": result[0][1],
+                "email": result[0][2],
+                "passwrd": result[0][3],
+                "course": result[0][4]
+            }
+            
             return usr
     
     #close db

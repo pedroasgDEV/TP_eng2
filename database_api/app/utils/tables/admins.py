@@ -1,5 +1,4 @@
 from app.utils.connectDB import PostgreSQL
-from app.models.admin import Admin
 
 class Admins:
     def __init__(self):
@@ -33,7 +32,14 @@ class Admins:
             ('{doc["name"]}', '{doc["email"]}', '{doc["passwrd"]}', '{doc["derp"]}');
         '''
         
-        return self.__postgre.execute(sql)
+        if self.__postgre.execute(sql) is False: return False
+            
+        sql = f'''
+            SELECT id FROM admins WHERE email = '{doc['email']}';
+        '''
+        
+        result = self.__postgre.consult(sql)
+        return result[0][0]
     
     #select by id
     def select(self, id):
@@ -43,12 +49,18 @@ class Admins:
         '''
         
         result = self.__postgre.consult(sql)
-        if result is not None:
-            adm = Admin(result[0][0], result[0][1], result[0][2],
-                       result[0][3], result[0][4])
+        
+        if result is None or len(result) < 1: return False
+        else:
+            adm = {
+                "id": result[0][0],
+                "name": result[0][1],
+                "email": result[0][2],
+                "passwrd": result[0][3],
+                "derp": result[0][4]
+            }
+            
             return adm
-
-        else: return result
         
     #select all
     def select_all(self):
@@ -59,16 +71,20 @@ class Admins:
         results = self.__postgre.consult(sql)
         adms = []
         
-        if results is not None:
+        if results is None or len(results) < 1: return False
+        else:
             for result in results:
-                adm = Admin(result[0], result[1], result[2],
-                       result[3], result[4])
+                adm = {
+                    "id": result[0],
+                    "name": result[1],
+                    "email": result[2],
+                    "passwrd": result[3],
+                    "derp": result[4]
+                }
                 
                 adms.append(adm)
                 
             return adms
-
-        else: return result
 
     #select by derp
     def select_derp(self, derp):
@@ -79,16 +95,20 @@ class Admins:
         results = self.__postgre.consult(sql)
         adms = []
         
-        if results is not None:
+        if results is None or len(results) < 1: return False
+        else:
             for result in results:
-                adm = Admin(result[0], result[1], result[2],
-                       result[3], result[4])
+                adm = {
+                    "id": result[0],
+                    "name": result[1],
+                    "email": result[2],
+                    "passwrd": result[3],
+                    "derp": result[4]
+                }
                 
                 adms.append(adm)
                 
             return adms
-
-        else: return result
     
     #update data
     def update(self, id, doc):
@@ -104,7 +124,8 @@ class Admins:
             WHERE id = '{id}';
         '''
         
-        return self.__postgre.execute(sql)
+        if self.__postgre.execute(sql) is False: return False
+        else: return True
     
     #delet data
     def delete(self, id):
@@ -113,7 +134,8 @@ class Admins:
             WHERE id = '{id}';
         '''
         
-        return self.__postgre.execute(sql)
+        if self.__postgre.execute(sql) is False: return False
+        else: return True
     
     def login(self, doc):
         sql = f'''
@@ -126,8 +148,14 @@ class Admins:
             
         if result is None or len(result) < 1: return False
         else: 
-            adm = Admin(result[0][0], result[0][1], result[0][2],
-                       result[0][3], result[0][4])
+            adm = {
+                "id": result[0][0],
+                "name": result[0][1],
+                "email": result[0][2],
+                "passwrd": result[0][3],
+                "derp": result[0][4]
+            }
+            
             return adm
     
     #close db
