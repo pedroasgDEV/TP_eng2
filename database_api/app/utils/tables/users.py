@@ -74,3 +74,22 @@ class Users:
         '''
         
         return self.__postgre.execute(sql)
+    
+    def login(self, doc):
+        sql = f'''
+            SELECT * FROM users
+            WHERE email = '{doc['email']}'
+            AND passwrd = '{doc['passwrd']}';
+        '''
+        
+        result = self.__postgre.consult(sql)
+            
+        if result is None or len(result) < 1: return False
+        else: 
+            usr = User(result[0][0], result[0][1], result[0][2],
+                       result[0][3], result[0][4])
+            return usr
+    
+    #close db
+    def close(self):
+        self.__postgre.close()
