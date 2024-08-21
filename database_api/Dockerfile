@@ -1,13 +1,13 @@
 FROM postgres:latest
 
-# Definir variáveis de ambiente para configurar o PostgreSQL
+#Define variables to config the PostgreSQL
 ENV POSTGRES_DB=tp_eng2
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=1234
 
-# Diretório onde os scripts SQL de inicialização serão copiados
-# Esses scripts serão executados automaticamente na inicialização do contêiner
+# Directory where initialization SQL scripts will be copied
+# These scripts will automatically run on container startup
 COPY ./initdb /docker-entrypoint-initdb.d/
 
-# Expor a porta padrão do PostgreSQL
+# Export the default PostgreSQL port
 EXPOSE 5432

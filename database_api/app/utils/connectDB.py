@@ -22,6 +22,10 @@ class PostgreSQL:
     def database(self):
         return self.__conn
     
+    @property
+    def cursor(self):
+        return self.__conn.cursor()
+    
     #Execute a query and return if work
     def execute(self, sql):
         try:
@@ -30,7 +34,7 @@ class PostgreSQL:
             cursor.close()
             self.__conn.commit()
             
-        except:
+        except Exception as e:
             return False
         
         return True

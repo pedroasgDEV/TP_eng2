@@ -1,8 +1,8 @@
 from app.models.usr import Usr
 
 class Admin(Usr):
-    def __init__(self, name = "NONAME", email = "NOEMAIL", passwrd = "NOPASSWRD",
-                 derp = "NODERP", id = -1):
+    def __init__(self, id = -1, name = "NONAME", email = "NOEMAIL", passwrd = "NOPASSWRD",
+                 derp = "NODERP"):
         try:
             super().__init__(name, email, passwrd)
             self.__derp = derp

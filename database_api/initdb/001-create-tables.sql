@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE,
     passwrd VARCHAR(255) NOT NULL,
-    inst VARCHAR(255) NOT NULL,
     course VARCHAR(255) NOT NULL
 );
 
