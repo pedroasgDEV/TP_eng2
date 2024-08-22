@@ -1,1 +1,4 @@
-.tp_eng2
+.tp_env
+.tp_env/*
+__pycache__
+__pycache__/*

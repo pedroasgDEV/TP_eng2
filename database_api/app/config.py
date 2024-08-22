@@ -1,8 +1,7 @@
-mongodb_config = {
-    "DATABASE": "tp_sd1",
-    "COLLECTION_MAIN": "people",
-    "USERNAME": "pedroasg",
-    "PASSWORD": "TiVxYL69kZGFBp8Z",
-    "PROJECT": "person-data-generator",
-    "APP": "person-data-generator"
+postgresql_config = {
+    "HOST": "localhost",
+    "DATABASE": "tp_eng2",
+    "USERNAME": "postgres",
+    "PASSWORD": "1234",
+    "PORT": "5432"
 }
