@@ -42,12 +42,6 @@ class AdminsTest:
 
         if docs_read is False: return False
         else: return True
-    
-    def selectDerpTest(self, derp):    
-        docs_read = self.__adm.select_derp(derp)
-
-        if docs_read is False: return False
-        else: return True
         
     def updateTest(self, doc, id = None):
         

@@ -1,42 +1,52 @@
 from flask import Blueprint, request, jsonify
-from app.utils.collections.people import PeopleCollection
-from app.utils.connectDB import MongoDB
+from app.utils.tables.admins import Admins
 
 admins_bp = Blueprint('admins_bp', __name__)
 
-# Configurar a conexão com o MongoDB
-mongo = MongoDB()
-mongo.connectDB()
-db = mongo.get_database()
-col = PeopleCollection(db)
-
-@admins_bp.route('/<int:qnt>', methods=['GET'])
-def get_random_users(qnt):
-    result = col.select_many_random(qnt)
-    return jsonify(result), 200
-
-@admins_bp.route('/id:<id>', methods=['GET'])
-def get_one_user(id):
-    result = col.select_one(id)
-    return jsonify(result), 200
-
+# Insert Data
 @admins_bp.route('/', methods=['POST'])
 def create_item():
+    adm = Admins()
     data = request.get_json()
-    result = col.insert_document(data)
-    return jsonify({'_id': str(result.inserted_id)}), 201
+    
+    result = adm.insert(data)       
+    adm.close()
+    
+    if result is False: return jsonify({'message': 'Admin not created'}), 400
+    else: return jsonify({'message': 'Admin not created', 'id': result}), 201
 
-@admins_bp.route('/<item_id>', methods=['PUT'])
-def update_item(item_id):
+# Select Data
+@admins_bp.route('/<id>', methods=['GET'])
+def select_item(id):
+    adm = Admins()
+    
+    if id == "all": result = adm.select_all()
+    else: result = adm.select(id)
+    
+    adm.close()
+    
+    if result is False: return jsonify({'message': 'Admin not found'}), 404
+    else: return jsonify(result), 200
+
+# Update Data
+@admins_bp.route('/<id>', methods=['PUT'])
+def update_item(id):
+    adm = Admins()
     data = request.get_json()
-    result = col.edit_registry(item_id, data)
-    if result.modified_count:
-        return jsonify({'message': 'Item updated'}), 200
-    return jsonify({'error': 'Item not found'}), 404
+    
+    result = adm.update(id, data)
+    adm.close()
+    
+    if result: return jsonify({'message': 'Admin updated'}), 200
+    else: return jsonify({'message': 'Admin not updated'}), 404
 
-@admins_bp.route('/<item_id>', methods=['DELETE'])
-def delete_item(item_id):
-    result = col.delete_registry(item_id)
-    if result.deleted_count:
-        return jsonify({'message': 'Item deleted'}), 200
-    return jsonify({'error': 'Item not found'}), 404
+# Delete Data
+@admins_bp.route('/<id>', methods=['DELETE'])
+def delete_item(id):
+    adm = Admins()
+    
+    result = adm.delete(id)
+    adm.close()
+    
+    if result: return jsonify({'message': 'Admin deleted'}), 200
+    else: return jsonify({'message': 'Admin not found'}), 404

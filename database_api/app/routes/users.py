@@ -3,39 +3,48 @@ from app.utils.tables.users import Users
 
 users_bp = Blueprint('users_bp', __name__)
 
-# Configurar a conexão com o MongoDB
-mongo = MongoDB()
-mongo.connectDB()
-db = mongo.get_database()
-col = PeopleCollection(db)
-
-@users_bp.route('/<int:qnt>', methods=['GET'])
-def get_random_users(qnt):
-    result = col.select_many_random(qnt)
-    return jsonify(result), 200
-
-@users_bp.route('/id:<id>', methods=['GET'])
-def get_one_user(id):
-    result = col.select_one(id)
-    return jsonify(result), 200
-
+# Insert Data
 @users_bp.route('/', methods=['POST'])
 def create_item():
+    usr = Users()
     data = request.get_json()
-    result = col.insert_document(data)
-    return jsonify({'_id': str(result.inserted_id)}), 201
+    
+    result = usr.insert(data)
+    usr.close()
+    
+    if result: return jsonify({'message': 'User created'}), 201
+    else: return jsonify({'message': 'User not created'}), 400
 
-@users_bp.route('/<item_id>', methods=['PUT'])
-def update_item(item_id):
+# Select Data
+@users_bp.route('/<regis_id>', methods=['GET'])
+def select_item(regis_id):
+    usr = Users()
+    
+    result = usr.select(regis_id)
+    usr.close()
+    
+    if result is False: return jsonify({'message': 'User not found'}), 404
+    else: return jsonify(result), 200
+
+# Update Data
+@users_bp.route('/<regis_id>', methods=['PUT'])
+def update_item(regis_id):
+    usr = Users()
     data = request.get_json()
-    result = col.edit_registry(item_id, data)
-    if result.modified_count:
-        return jsonify({'message': 'Item updated'}), 200
-    return jsonify({'error': 'Item not found'}), 404
-
-@users_bp.route('/<item_id>', methods=['DELETE'])
-def delete_item(item_id):
-    result = col.delete_registry(item_id)
-    if result.deleted_count:
-        return jsonify({'message': 'Item deleted'}), 200
-    return jsonify({'error': 'Item not found'}), 404
+    
+    result = usr.update(regis_id, data)
+    usr.close()
+    
+    if result: return jsonify({'message': 'User updated'}), 200
+    else: return jsonify({'message': 'User not updated'}), 404
+    
+# Delete Data    
+@users_bp.route('/<regis_id>', methods=['DELETE'])
+def delete_item(regis_id):
+    usr = Users()
+    
+    result = usr.delete(regis_id)        
+    usr.close()
+    
+    if result: return jsonify({'message': 'User deleted'}), 200
+    else: return jsonify({'message': 'User not found'}), 404

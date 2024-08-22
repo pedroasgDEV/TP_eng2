@@ -64,9 +64,6 @@ else: print(" * Select operation not works :(")
 if adm.selectAllTest(): print(" * Select All operation works :)")
 else: print(" * Select operation not works :(")
 
-if adm.selectDerpTest("DECOM"): print(" * Select Derp operation works :)")
-else: print(" * Select operation not works :(")
-
 doc = {
     "name": "Fake",
     "email": "fake@email.com",
@@ -79,3 +76,5 @@ if adm.deleteTest(): print(" * Delete operation works :)")
 else: print(" * Delete operation not works :(")
 
 adm.endTestes()
+
+#6

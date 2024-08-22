@@ -85,30 +85,6 @@ class Admins:
                 adms.append(adm)
                 
             return adms
-
-    #select by derp
-    def select_derp(self, derp):
-        sql = f'''
-            SELECT * FROM admins WHERE derp = '{derp}';
-        '''
-        
-        results = self.__postgre.consult(sql)
-        adms = []
-        
-        if results is None or len(results) < 1: return False
-        else:
-            for result in results:
-                adm = {
-                    "id": result[0],
-                    "name": result[1],
-                    "email": result[2],
-                    "passwrd": result[3],
-                    "derp": result[4]
-                }
-                
-                adms.append(adm)
-                
-            return adms
     
     #update data
     def update(self, id, doc):
