@@ -14,9 +14,3 @@ app.set("views", path.resolve(__dirname, "src", "views"));
 app.set("view engine", "ejs");
 
 app.listen(PORT);
-
-
-
-//TODO add module to convert json em array
-
-//TODO finalisar api
