@@ -13,7 +13,7 @@ def create_item():
     adm.close()
     
     if result is False: return jsonify({'message': 'Admin not created'}), 400
-    else: return jsonify({'message': 'Admin not created', 'id': result}), 201
+    else: return jsonify({'message': 'Admin created', 'id': result}), 201
 
 # Select Data
 @admins_bp.route('/<id>', methods=['GET'])

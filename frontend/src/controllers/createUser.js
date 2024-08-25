@@ -1,52 +1,28 @@
-const post_mongo = require("../modules/mongo").post;
-const Person = require("../class/person").Person;
+const post_usr = require("../modules/users").post;
 
 function get (req, res) {
-    res.render('create_persona');
+    res.render('create_usr');
 }
 
 async function post(req, res){
-    const number = Math.floor(Math.random() * (100));
-    let img;
-    if(req.body.gender == "male")
-        img = `https://randomuser.me/api/portraits/men/${number}.jpg`;
-    else img = `https://randomuser.me/api/portraits/women/${number}.jpg`;
-
-    const person = new Person(
+    const usr = {
+        //regis_id
+        "regis_id": req.body.regis_id,
         //name
-        req.body.name,
+        "name": req.body.name,
         //email
-        req.body.email,
-        //Phone
-        req.body.phone,
+        "email": req.body.email,
+        //passwrd
+        "passwrd": req.body.passwrd,
+        //course
+        "course": req.body.course
+    };
 
-        //Number
-        req.body.number,
-        //street
-        req.body.street,
-        //city,
-        req.body.city,
-        //state
-        req.body.state,
-        //countru
-        req.body.country,
-        //postcode
-        req.body.postcode,
+    result = await post_usr(usr);
 
-        //Img
-        img,
-
-        req.body.cpf,
-    );
-
-    const {__mongo_id, ...post_doc} = person;
-    person.__mongo_id = (await post_mongo(post_doc))._id;
-
-    const people = [];
-    if (person.__mongo_id != undefined) people.push(person);
-
-    res.render('index', { people: people });
-}
+    if (!result) res.render('create_usr');
+    else res.render('login');
+} 
 
 module.exports = {
     get : get,

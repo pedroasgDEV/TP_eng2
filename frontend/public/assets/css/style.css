@@ -111,4 +111,9 @@ button:hover {
 
 a {
   text-decoration: none;
+  color: #ff6600;
+}
+
+a:hover {
+  text-decoration: underline;
 }

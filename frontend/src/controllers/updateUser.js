@@ -1,56 +1,40 @@
-
-const get_one = require("../modules/mongo").get_one
-const update = require("../modules/mongo").put
-const del_doc = require("../modules/mongo").del
-const Person = require("../class/person").Person
+const get_one = require("../modules/users").get;
+const update = require("../modules/users").put;
+const del_doc = require("../modules/users").del;
+const User = require("../class/user").User;
 const getDif = require("../utils/objDiff").getObjectDifference
 
 async function get (req, res) {
-    const person = await get_one(req.params.id.slice(1));
-    res.render('update_persona', { person: person } );
+    const result = await get_one(req.params.id.slice(1));
+    res.render('update_usr', { user: result });
 }
 
 async function post (req, res){
-    const person = await get_one(req.params.id.slice(1));
+    regis_id = req.params.id.slice(1)
+    const usr = await get_one(regis_id);
 
-    const person_update = new Person(
+    const usr_update = new User(
+        //regis
+        regis_id,
         //name
         req.body.name,
         //email
         req.body.email,
-        //Phone
-        req.body.phone,
-
-        //Number
-        req.body.number,
-        //street
-        req.body.street,
-        //city,
-        req.body.city,
-        //state
-        req.body.state,
-        //countru
-        req.body.country,
-        //postcode
-        req.body.postcode,
-
-        //Img
-        person.img,
-        req.body.cpf,
-        person.mongo_id
+        //passwrd
+        req.body.passwrd,
+        //course
+        req.body.course
     );
 
-    const diff = getDif(person, person_update)
-    await update(diff, req.params.id.slice(1))
+    const diff = getDif(usr, usr_update)
+    await update(diff, regis_id)
 
-    const people = []; people.push(person_update)
-
-    res.render('index', { people: people });
+    res.render('update_usr', { people: usr_update });
 }
 
 async function del (req, res){
     await del_doc(req.params.id.slice(1));
-    res.render('index', { people: [] });
+    res.render('login');
 }
 
 module.exports = {

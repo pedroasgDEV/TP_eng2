@@ -1,4 +1,4 @@
-const Usr = require("usr").Usr
+const Usr = require("./usr").Usr;
 
 class Admin extends Usr {
     constructor(id = -1, name = "NONAME", email = "NOEMAIL", passwrd = "NOPASSWRD", derp = "NODERP") {
@@ -28,5 +28,5 @@ class Admin extends Usr {
     }
 }
 
-exports.Admin = Admin
+exports.Admin = Admin;
   

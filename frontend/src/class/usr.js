@@ -46,6 +46,6 @@ class Usr {
     toString() {
       return `Name: ${this._name}, Email: ${this._email}`;
     }
-  }
+}
 
-exports.Usr = Usr
+exports.Usr = Usr;

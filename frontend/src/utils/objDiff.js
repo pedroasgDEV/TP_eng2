@@ -1,7 +1,3 @@
-const { Person } = require("../class/person");
-
-const person = require("../class/person").Person
-
 function getObjectDifference(obj1, obj2) {
     const diff = {};
 
