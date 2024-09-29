@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Criar Usuario</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Criar Usuario</h1>
+        <form action="/createUsr" method="POST">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+
+            <label for="passwrd">Senha</label>
+            <input type="text" id="passwrd" name="passwrd" required>
+
+            <label for="course">Curso</label>
+            <input type="text" id="course" name="course" required>
+
+            <label for="regis_id">Número de Matricula</label>
+            <input type="text" id="regis_id" name="regis_id" required>
+            
+            <button type="submit">Criar</button>
+        </form>
+    </div>
+</body>
+</html>

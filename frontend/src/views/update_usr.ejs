@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Update Persona</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Update User</h1>
+        <a href="/delete/:<%= user.regis_id %>""><button class="delete-button">Delete User</button></a>
+        <form id="personaForm" action="/updatePersona/:<%= user.regis_id %>" method="POST">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" value="<%= user.name %>" required>
+            
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" value="<%= user.email %>" required>
+
+            <label for="passwrd">Senha</label>
+            <input type="text" id="passwrd" name="passwrd" value="<%= user.passwrd %>" required>
+
+            <label for="course">Curso</label>
+            <input type="text" id="course" name="course" value="<%= user.course %>" required>
+            
+            <button type="submit">Atualizar</button>
+        </form>
+    </div>
+    <script src="../public_assets/script.js"></script>
+</body>
+</html>
