@@ -14,12 +14,11 @@ CREATE TABLE IF NOT EXISTS admins (
     derp VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS subjets (
-    subjet_code VARCHAR(255) PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS subjects (
+    subject_code VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     professor VARCHAR(255) NOT NULL,
-    derp VARCHAR(255) NOT NULL,
-    summary TEXT
+    derp VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS user_subjects (
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS user_subjects (
     subject_code VARCHAR(255),
     PRIMARY KEY (user_id, subject_code),
     FOREIGN KEY (user_id) REFERENCES users(regis_id),
-    FOREIGN KEY (subject_code) REFERENCES subjects(subjet_code)
+    FOREIGN KEY (subject_code) REFERENCES subjects(subject_code)
 );
 
 CREATE TABLE IF NOT EXISTS admin_subjects (
@@ -35,5 +34,5 @@ CREATE TABLE IF NOT EXISTS admin_subjects (
     subject_code VARCHAR(255),
     PRIMARY KEY (admin_id, subject_code),
     FOREIGN KEY (admin_id) REFERENCES admins(id),
-    FOREIGN KEY (subject_code) REFERENCES subjects(subjet_code)
+    FOREIGN KEY (subject_code) REFERENCES subjects(subject_code)
 );
