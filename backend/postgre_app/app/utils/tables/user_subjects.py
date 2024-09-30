@@ -53,7 +53,7 @@ class UsrSub:
             SELECT *
             FROM users usr
             JOIN user_subjects usrsub ON usr.regis_id = usrsub.user_id
-            WHERE usrsub.subject_code = {subject_code};
+            WHERE usrsub.subject_code = '{subject_code}';
         '''
         
         results = self.__postgre.consult(sql)
@@ -80,7 +80,7 @@ class UsrSub:
             SELECT *
             FROM subjects sub
             JOIN user_subjects usrsub ON sub.subject_code = usrsub.subject_code
-            WHERE usrsub.user_id = {user_id};
+            WHERE usrsub.user_id = '{user_id}';
         '''
         
         results = self.__postgre.consult(sql)

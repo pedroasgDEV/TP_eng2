@@ -9,5 +9,6 @@ def create_app():
     app.register_blueprint(users_bp, url_prefix='/api/users')
     app.register_blueprint(admins_bp, url_prefix='/api/admins')
     app.register_blueprint(login_bp, url_prefix='/api/login')
+    app.register_blueprint(login_bp, url_prefix='/api/subjects')
     
     return app

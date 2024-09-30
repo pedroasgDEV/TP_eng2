@@ -37,7 +37,7 @@ class Subjects:
     #select by subject_code
     def select(self, subject_code):
         sql = f'''
-            SELECT * FROM subjets
+            SELECT * FROM subjects
             WHERE subject_code = '{subject_code}';
         '''
         

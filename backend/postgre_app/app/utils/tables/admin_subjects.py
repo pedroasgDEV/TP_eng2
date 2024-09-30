@@ -53,7 +53,7 @@ class AdmSub:
             SELECT *
             FROM admins adm
             JOIN admin_subjects admsub ON adm.id = admsub.admin_id
-            WHERE admsub.subject_code = {subject_code};
+            WHERE admsub.subject_code = '{subject_code}';
         '''
         
         results = self.__postgre.consult(sql)
@@ -80,7 +80,7 @@ class AdmSub:
             SELECT *
             FROM subjects sub
             JOIN admin_subjects admsub ON sub.subject_code = admsub.subject_code
-            WHERE admsub.admin_id = {admin_id};
+            WHERE admsub.admin_id = '{admin_id}';
         '''
         
         results = self.__postgre.consult(sql)

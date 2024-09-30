@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS user_subjects (
 );
 
 CREATE TABLE IF NOT EXISTS admin_subjects (
-    admin_id VARCHAR(255),
+    admin_id INTEGER,
     subject_code VARCHAR(255),
     PRIMARY KEY (admin_id, subject_code),
     FOREIGN KEY (admin_id) REFERENCES admins(id),
