@@ -39,7 +39,7 @@ class Admins:
         '''
         
         result = self.__postgre.consult(sql)
-        return result[0][0]
+        return int(result[0][0])
     
     #select by id
     def select(self, id):
@@ -53,7 +53,7 @@ class Admins:
         if result is None or len(result) < 1: return False
         else:
             adm = {
-                "id": result[0][0],
+                "id": int(result[0][0]),
                 "name": result[0][1],
                 "email": result[0][2],
                 "passwrd": result[0][3],
@@ -75,7 +75,7 @@ class Admins:
         else:
             for result in results:
                 adm = {
-                    "id": result[0],
+                    "id": int(result[0]),
                     "name": result[1],
                     "email": result[2],
                     "passwrd": result[3],
@@ -97,7 +97,7 @@ class Admins:
         sql = f'''
             UPDATE admins
             SET {upd}
-            WHERE id = '{id}';
+            WHERE id = {id};
         '''
         
         if self.__postgre.execute(sql) is False: return False
@@ -107,7 +107,7 @@ class Admins:
     def delete(self, id):
         sql = f'''
             DELETE FROM admins
-            WHERE id = '{id}';
+            WHERE id = {id};
         '''
         
         if self.__postgre.execute(sql) is False: return False

@@ -29,7 +29,7 @@ class AdmSub:
             INSERT INTO admin_subjects 
             (admin_id, subject_code)
             VALUES 
-            ('{admin_id}', '{subject_code}');
+            ({admin_id}, '{subject_code}');
         '''
         
         return self.__postgre.execute(sql)
@@ -38,7 +38,7 @@ class AdmSub:
     def verify(self, admin_id, subject_code):
         sql = f'''
             SELECT * FROM admin_subjects
-            WHERE admin_id = '{admin_id}'
+            WHERE admin_id = {admin_id}
             AND subject_code = '{subject_code}';
         '''
         
@@ -80,7 +80,7 @@ class AdmSub:
             SELECT *
             FROM subjects sub
             JOIN admin_subjects admsub ON sub.subject_code = admsub.subject_code
-            WHERE admsub.admin_id = '{admin_id}';
+            WHERE admsub.admin_id = {admin_id};
         '''
         
         results = self.__postgre.consult(sql)
@@ -104,7 +104,7 @@ class AdmSub:
     def delete(self, admin_id, subject_code):
         sql = f'''
             DELETE FROM admin_subjects
-            WHERE admin_id = '{admin_id}'
+            WHERE admin_id = {admin_id}
             AND subject_code = '{subject_code}';
         '''
         
