@@ -1,51 +1,49 @@
-Aqui está o `README.md` gerado com base nas rotas e informações que você forneceu:
-
 ```markdown
-# API de Fóruns com Flask e MongoDB
+# Forum API with Flask and MongoDB
 
-Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleção no MongoDB. Os usuários podem criar, editar, listar e deletar fóruns e posts, com suporte a operações ordenadas por timestamp.
+This API provides a forum system where each forum corresponds to a collection in MongoDB. Users can create, edit, list, and delete forums and posts, with support for timestamp-ordered operations.
 
-## Requisitos
+## Requirements
 
 - Python 3.x
 - Flask
 - PyMongo
-- MongoDB (pode ser executado em um container Docker)
+- MongoDB (can be run in a Docker container)
 
-## Configuração do Ambiente
+## Environment Setup
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
    ```bash
    git clone <repo_url>
    cd <repo_name>
    ```
 
-2. **Instale as dependências:**
+2. **Install the dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Execute o MongoDB via Docker:**
-   Certifique-se de que o MongoDB está rodando em um container Docker com a porta `27017` exposta.
+3. **Run MongoDB using Docker:**
+   Ensure that MongoDB is running in a Docker container with the `27017` port exposed.
    ```bash
    docker run -d -p 27017:27017 --name mongo mongo
    ```
 
-4. **Configure as variáveis de ambiente do MongoDB:**
-   Verifique o arquivo `app/config.py` para garantir que as configurações de conexão com o MongoDB estão corretas.
+4. **Set MongoDB environment variables:**
+   Check the `app/config.py` file to ensure that the MongoDB connection settings are correct.
 
-5. **Execute a aplicação Flask:**
+5. **Run the Flask application:**
    ```bash
    flask run
    ```
 
-## Rotas da API
+## API Routes
 
-### **Fóruns**
+### **Forums**
 
-#### Criar um Fórum
-**POST:** `/api/<subject_code>`  
-**Envio:**
+#### Create a Forum
+**POST:** `/api/forum/<subject_code>`  
+**Request:**
 ```json
 {
   "User": "00.0.0000",
@@ -54,7 +52,7 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
   "time": 1234567890
 }
 ```
-**Recebimento:**
+**Response:**
 ```json
 {
   "status": "success",
@@ -62,10 +60,10 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
 }
 ```
 
-#### Deletar um Fórum
-**DELETE:** `/api/<subject_code>`  
-**Envio:** N/A  
-**Recebimento:**
+#### Delete a Forum
+**DELETE:** `/api/forum/<subject_code>`  
+**Request:** N/A  
+**Response:**
 ```json
 {
   "status": "success",
@@ -75,18 +73,18 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
 
 ### **Posts**
 
-#### Criar um Post
-**POST:** `/api/<subject_code>/`  
-**Envio:**
+#### Create a Post
+**POST:** `/api/forum/<subject_code>/`  
+**Request:**
 ```json
 {
   "User": "00.0.0000",
   "Type": "POST",
-  "text": "Texto do post",
+  "text": "Post text",
   "time": 1234567890
 }
 ```
-**Recebimento:**
+**Response:**
 ```json
 {
   "status": "success",
@@ -95,16 +93,16 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
     "_id": "60b1234567890abcdef12345",
     "User": "00.0.0000",
     "Type": "POST",
-    "text": "Texto do post",
+    "text": "Post text",
     "time": 1234567890
   }
 }
 ```
 
-#### Listar Posts
-**GET:** `/api/<subject_code>/`  
-**Envio:** (Filtros opcionais no corpo da requisição)  
-**Recebimento:**
+#### List Posts
+**GET:** `/api/forum/<subject_code>/`  
+**Note:** (Optional filters in the request body)  
+**Response:**
 ```json
 {
   "status": "success",
@@ -113,23 +111,23 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
       "_id": "60b1234567890abcdef12345",
       "User": "00.0.0000",
       "Type": "POST",
-      "text": "Texto do post",
+      "text": "Post text",
       "time": 1234567890
     }
   ]
 }
 ```
 
-#### Atualizar um Post
-**PUT:** `/api/<subject_code>/?id=<post_id>`  
-**Envio:**
+#### Update a Post
+**PUT:** `/api/forum/<subject_code>/?id=<post_id>`  
+**Request:**
 ```json
 {
-  "text": "Texto atualizado do post",
+  "text": "Updated post text",
   "time": 1234567891
 }
 ```
-**Recebimento:**
+**Response:**
 ```json
 {
   "status": "success",
@@ -137,37 +135,18 @@ Esta API fornece um sistema de fóruns onde cada fórum corresponde a uma coleç
 }
 ```
 
-#### Deletar Posts
-**DELETE:** `/api/<subject_code>/`  
-**Envio:**
+#### Delete Posts
+**DELETE:** `/api/forum/<subject_code>/`  
+**Request:**
 ```json
 {
   "User": "00.0.0000"
 }
 ```
-**Recebimento:**
+**Response:**
 ```json
 {
   "status": "success",
   "deleted_count": 1
 }
 ```
-
-### Exemplo de JSON de Post
-
-```json
-{
-  "_id": "60b1234567890abcdef12345",
-  "User": "00.0.0000",
-  "Type": "POST",
-  "text": "Texto do post",
-  "time": 1234567890
-}
-```
-
-## Contato
-
-Para mais informações ou ajuda, entre em contato com [email@example.com].
-```
-
-Esse `README.md` contém todas as rotas relevantes para o sistema de fóruns, junto com exemplos de uso e instruções para rodar o projeto.

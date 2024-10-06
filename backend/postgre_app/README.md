@@ -1,110 +1,126 @@
-**ROTAS**
+```markdown
+# Flask API for Managing Users, Admins, and Subjects
 
-***USER**** -> arquivo: app/routes/users.py
+This project is a RESTful API built using Flask, designed to manage Users, Admins, Subjects, and their relationships. It provides functionality to create, read, update, and delete records in the system as well as managing logins and connections between users/admins and subjects.
 
-POST: localhost:3030/api/users/ 
-    SEND: (JSON com os dados do novo usuario)
-    RECV: (JSON com 'message' se funcionou ou não) 
+## Table of Contents
 
-GET: localhost:3030/api/users/<regis_id>
-    SEND: (nada)
-    RECV: (JSON com 'message' se não funcionou ou JSON com os dados do usuario encontrado)
+- [Installation](#installation)
+- [Routes](#routes)
+  - [Admins](#admins)
+  - [Users](#users)
+  - [Login](#login)
+  - [Subjects](#subjects)
+- [Testing](#testing)
 
-PUT: localhost:3030/api/users/<regis_id>
-    SEND: (JSON com os campos atualizados, não precisa enviar todos os dados do usario)
-    RECV: (JSON com 'message' se funcionou ou não)
+## Installation
 
-DELETE: localhost:3030/api/users/<regis_id>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+To get started, follow these steps:
 
-***ADMIN**** -> arquivo: app/routes/admins.py
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repository.git
+   cd your-repository
+   ```
 
-POST: localhost:3030/api/admins/ 
-    SEND: (JSON com os dados do novo admin)
-    RECV: (JSON com 'message' se funcionou ou não) 
+2. Create a virtual environment and install dependencies:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-GET ONE: localhost:3030/api/admins/<id>
-    SEND: (nada)
-    RECV: (JSON com 'message' se não funcionou ou JSON com os dados do admin encontrado)
+3. Run the application:
+   ```bash
+   python __main__.py
+   ```
 
-GET ALL: localhost:3030/api/admins/all
-    SEND: (nada)
-    RECV: (JSON com 'message' se não funcionou ou JSON com uma lista com os dados de todos os admins)
+The application will be available at `http://localhost:3030`.
 
-PUT: localhost:3030/api/admins/<id>
-    SEND: (JSON com os campos atualizados, não precisa enviar todos os dados do admin)
-    RECV: (JSON com 'message' se funcionou ou não)
+## Routes
 
-DELETE: localhost:3030/api/admins/<id>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+### Admins
 
-***LOGIN**** -> arquivo: app/routes/login.py
+- **Create Admin:**  
+  `POST /api/admins/`  
+  **Body:** JSON object with admin details (e.g., name, email, password).
+  
+- **Get Admin:**  
+  `GET /api/admins/<id>`  
+  Retrieves the admin by `id`. Use `all` to get all admins.
 
-GET: localhost:3030/api/login/
-    SEND: (JSON com 'email' e 'passwrd')
-    RECV: (JSON com 'message' se não funcionou ou JSON com os dados do usr ou adm encontrado em 'obj' e com 'type' com o tipo de cadastro encontrado, se é user ou admin)
+- **Update Admin:**  
+  `PUT /api/admins/<id>`  
+  **Body:** JSON object with fields to update.
 
+- **Delete Admin:**  
+  `DELETE /api/admins/<id>`  
+  Deletes the admin by `id`.
 
-***SUBJECTS**** -> arquivo: app/routes/subjects.py
+### Users
 
-POST: localhost:3030/api/subjects/
-    SEND: (JSON com nome, professor e derpatamento)
-    RECV: (JSON com 'message' se funcionou ou não)
+- **Create User:**  
+  `POST /api/users/`  
+  **Body:** JSON object with user details (e.g., regis_id, name, email, password).
 
-GET: localhost:3030/api/subjects/<subject_code>
-    SEND: (nada)
-    RECV: (JSON com os dados da subject ou 'message' de que não encontrou)
+- **Get User:**  
+  `GET /api/users/<regis_id>`  
+  Retrieves the user by `regis_id`.
 
-GET: localhost:3030/api/subjects/all
-    SEND: (nada)
-    RECV: (JSON com os dados de todos subjects ou 'message' de que não encontrou)
+- **Update User:**  
+  `PUT /api/users/<regis_id>`  
+  **Body:** JSON object with fields to update.
 
-PUT: localhost:3030/api/subjects/<subject_code>
-    SEND: (JSON com os atributos que foram alterados)
-    RECV: (JSON com 'message' se funcionou ou não)
+- **Delete User:**  
+  `DELETE /api/users/<regis_id>`  
+  Deletes the user by `regis_id`.
 
-DELETE: localhost:3030/api/subjects/<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+### Login
 
-POST: localhost:3030/api/subjects/users/?user=<regis_id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+- **Login:**  
+  `GET /api/login/`  
+  **Body:** JSON object with email and password for login. Returns user or admin details based on the credentials.
 
-GET: localhost:3030/api/subjects/users/?user=<regis_id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se existe ou não essa conexão)
+### Subjects
 
-GET: localhost:3030/api/subjects/users/?user=<regis_id>
-    SEND: (nada)
-    RECV: (JSON com todos os subjects vinculados a esse usuario ou 'message' se não existe subject vinculada a esse user)
+- **Create Subject:**  
+  `POST /api/subjects/`  
+  **Body:** JSON object with subject details (e.g., subject_code, name, professor).
 
-GET: localhost:3030/api/subjects/users/?subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com todos os users vinculados a esse subject ou 'message' se não existe user vinculada a esse subject)
+- **Get Subject:**  
+  `GET /api/subjects/<subject_code>`  
+  Retrieves the subject by `subject_code`. Use `all` to get all subjects.
 
-DELETE: localhost:3030/api/subjects/users/?user=<regis_id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+- **Update Subject:**  
+  `PUT /api/subjects/<subject_code>`  
+  **Body:** JSON object with fields to update.
 
-POST: localhost:3030/api/subjects/admins/?admin=<id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+- **Delete Subject:**  
+  `DELETE /api/subjects/<subject_code>`  
+  Deletes the subject by `subject_code`.
 
-GET: localhost:3030/api/subjects/admins/?admin=<id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se existe ou não essa conexão)
+- **User-Subject Connection:**  
+  `POST /api/subjects/users/`  
+  Creates a connection between a user and a subject.
+  
+  **Query Parameters:**
+  - `user`: user ID
+  - `subject`: subject code
 
-GET: localhost:3030/api/subjects/admins/?admin=<id>
-    SEND: (nada)
-    RECV: (JSON com todos os subjects vinculados a esse admin ou 'message' se não existe subject vinculada a esse admin)
+- **Admin-Subject Connection:**  
+  `POST /api/subjects/admins/`  
+  Creates a connection between an admin and a subject.
+  
+  **Query Parameters:**
+  - `admin`: admin ID
+  - `subject`: subject code
 
-GET: localhost:3030/api/subjects/admins/?subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com todos os admins vinculados a esse subject ou 'message' se não existe admin vinculada a esse subject)
+## Testing
 
-DELETE: localhost:3030/api/subjects/admins/?admin=<id>&subject=<subject_code>
-    SEND: (nada)
-    RECV: (JSON com 'message' se funcionou ou não)
+Testing is available to validate each module's operations. The test scripts can be found in the `/tests/` directory and executed by running the main test file:
+
+```bash
+python -m app.tests
+```
+
+You will see messages indicating whether each operation works correctly.
