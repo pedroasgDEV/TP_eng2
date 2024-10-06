@@ -16,7 +16,7 @@ class CRUDtest:
         doc_insert = self.__forum.insert(doc)
 
         if doc_insert["status"] == "success": 
-            self.__id = doc_insert["inserted_id"]
+            self.__id = doc_insert["_id"]
             return True
         else: return False
     

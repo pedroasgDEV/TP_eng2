@@ -12,7 +12,7 @@ class Forums:
         try:
             # Insert document
             result = self.__collection.insert_one(doc)
-            return {"status": "success", "inserted_id": str(result.inserted_id)}
+            return {"status": "success", "_id": str(result.inserted_id)}
         except Exception as e:
             return {"status": "error", "message": str(e)}
     
