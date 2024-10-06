@@ -53,6 +53,29 @@ class Subjects:
             }
             
             return sbj
+        
+    #select all
+    def select_all(self):
+        sql = f'''
+            SELECT * FROM subjects;
+        '''
+        
+        results = self.__postgre.consult(sql)
+        subs = []
+        
+        if results is None or len(results) < 1: return False
+        else:
+            for result in results:
+                sub = {
+                    "subject_code": result[0][0],
+                    "name": result[0][1],
+                    "professor": result[0][2],
+                    "derp": result[0][3]
+                }
+                
+                subs.append(sub)
+                
+            return subs
     
     #update data
     def update(self, subject_code, doc):

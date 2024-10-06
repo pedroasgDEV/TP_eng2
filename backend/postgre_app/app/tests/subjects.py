@@ -19,6 +19,12 @@ class SubjectsTest:
 
     def selectTest(self, subject_code):      
         docs_read = self.__sub.select(subject_code)
+        
+        if docs_read is False: return False
+        else: return True
+    
+    def selectAllTest(self):    
+        docs_read = self.__sub.select_all()
 
         if docs_read is False: return False
         else: return True

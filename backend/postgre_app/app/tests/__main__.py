@@ -95,6 +95,9 @@ else: print(" * Insert operation not works :(")
 if sub.selectTest("BCC323"): print(" * Select operation works :)")
 else: print(" * Select operation not works :(")
 
+if sub.selectAllTest(): print(" * Select All operation works :)")
+else: print(" * Select All operation not works :(")
+
 doc = {
     "professor": "CFRED"
 }
